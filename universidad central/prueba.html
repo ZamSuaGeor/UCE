@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home - Universidad Central del Ecuador</title>
+    <link rel="shortcut icon" href="logo/uce.png" type="image/x-icon">
+    <!-- Agregar FontAwesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+ 
+    <style>
+        /* Configuración básica de la cuadrícula para pantallas grandes */
+        .cuadrícula {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(8, auto); /* Cambio a auto para ajustar a contenido */
+            gap: 4px;
+            background-color: #1a2b44;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .cuadrícula > div {
+            background-color: #ffffff;
+            color: #1a2b44;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            padding: 0px;
+            border-radius: 2px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+
+        /* Clases para ajustar el tamaño de cada div en la cuadrícula */
+        .col-span-4 { grid-column: span 4; }
+        .col-span-2 { grid-column: span 2; }
+        .col-start-4 { grid-column-start: 4; }
+        .row-span-2 { grid-row: span 2; }
+        .row-span-5 { grid-row: span 5; }
+        .row-start-3 { grid-row-start: 3; }
+        .row-start-6 { grid-row-start: 6; }
+        .row-start-7 { grid-row-start: 7; }
+        .row-start-8 { grid-row-start: 8; }
+
+        /* Estilos para elementos específicos */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%; /* Ajustar altura al 100% del contenedor */
+        }
+
+        .carousel img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: none;
+        }
+
+        .carousel img.active {
+            display: block;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+
+        .carousel-btn.left {
+            left: 10px;
+        }
+
+        .carousel-btn.right {
+            right: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            flex-direction: column;
+            align-items: rigth;
+            gap: 10px;
+            justify-content: flex-start; /* Alinea los iconos a la izquierda */
+        }
+
+        .social-icons i { /* Estilos para los iconos de redes sociales */
+          margin-right: 5px;
+        }
+
+        .small-boxes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            text-align: center;
+        }
+
+        /* Estilos para el título de la sección */
+        .section-title {
+            background-color: #007bff; /* Color de fondo azul */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+
+        /* Media query para dispositivos móviles */
+        @media (max-width: 768px) {
+            .cuadrícula {
+                grid-template-columns: 1fr; /* Cambia a una sola columna */
+                grid-template-rows: auto; /* Ajusta filas automáticamente */
+            }
+
+            .col-span-4, .col-span-2, .col-start-4, .row-span-2, .row-span-5,
+            .row-start-3, .row-start-6, .row-start-7, .row-start-8 {
+                grid-column: span 1 !important; /* Asegura que ocupen toda la fila */
+                grid-row: auto !important; /* Ajusta filas automáticamente */
+            }
+
+            .small-boxes {
+                grid-template-columns: 1fr; /* Ajusta cajas a una columna */
+            }
+
+            .social-icons {
+                flex-direction: row; /* Iconos en fila */
+                justify-content: flex-start; /* Alinea a la izquierda */
+                flex-wrap: wrap; /* Permite que los iconos se ajusten a varias líneas */
+                gap: 5px;
+                font-size: 0.8em;
+            }
+        }
+
+        /* Estilos para la sección de información de la universidad */
+        .university-info {
+            text-align: left; /* Alinea el texto a la izquierda */
+        }
+
+        .university-info h4 {
+            margin-top: 10px; /* Espacio superior para los títulos h4 */
+        }
+
+        .university-info ul {
+            list-style-type: disc; /* Viñetas de tipo disco */
+            margin-left: 20px; /* Margen izquierdo para la lista */
+            padding-left: 0; /* Elimina el padding izquierdo predeterminado */
+        }
+       
+
+
+
+
+
+        /* Estilos para el menú desplegable */
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            text-decoration: none;
+        }
+
+        .social-icons .nav-link {
+            font-size: 15px;
+            color: #ffffff !important;
+            padding: 0%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .bg-primary {
+            background-color: #004080 !important; /* Color de fondo */
+        }
+
+        #fecha-actual {
+            font-size: 12px;
+            color: yellow; /* Color amarillo para la fecha */
+            font-weight: lighter;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Estilos para el menú desplegable */
+        .nav-item.dropdown {
+            position: relative;
+            font-size: 9px;
+            margin-bottom: 5px;
+            color: #fff;
+            font-weight: lighter;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            display: none;
+            background-color: #eeeff0;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            grid-template-columns: repeat(3, 1fr); /* Tres columnas */
+            width: 300;
+
+        }
+
+        .dropdown-menu:before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 10px;
+    border-width: 0 8px 8px 8px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+  }
+        .dropdown-menu .dropdown-item {
+            color: #222222;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background-color: #0b71d82c;
+        }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .menu-item img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+        .menu-item:hover {
+            background-color: #a1c5f5;
+            border-radius: 5px;
+        }
+        body {
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+            
+        }
+        .container {
+            display: flex;
+            gap: 30px;
+            padding: 20px;
+            background-color: #222222;
+        }
+        .column {
+            width: 200px;
+            
+
+        }
+  
+        h2 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #fff;
+            font-weight: bold;
+
+        }
+        .un {
+            list-style: none;
+            padding: 0;
+            opacity: 0.6;
+            font-size: 12px;
+            padding: 5px;
+
+        }
+        li {
+            margin-bottom: 8px;
+        }
+
+        #boton_enviar{
+    background-color:rgb(246, 247, 246);
+    color: red;
+    border-color: red;
+    border-radius: 5px;
+    padding:8px 16px;
+    font-weight: bold;
+    font-size: 15px;
+    
+    }
+    
+    #boton_enviar:hover{
+        background-color:red;
+        color: white;
+        
+    }
+    #boton1{
+    background-color:rgb(246, 247, 246);
+    color: rgb(143, 141, 141);
+    border-color: rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 10px 10px 10px 10px;
+    font-weight: normal;
+    font-size: 15px;
+    
+    }
+    #boton1:hover{
+        background-color:rgb(78, 77, 77);
+        color: white;
+        
+    }
+
+    #boton2{
+    background-color:rgb(246, 247, 246);
+    color: rgb(143, 141, 141);
+    border-color: rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 10px 10px 10px 10px;
+    font-weight: normal;
+    font-size: 15px;
+    
+    }
+    #boton2:hover{
+        background-color:rgb(78, 77, 77);
+        color: white;
+        
+    }
+
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <!-- Menú de tres líneas en la esquina izquierda -->
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
+            <i class="bi bi-list" style="font-size: 1.5rem;"></i>
+        </button>
+        
+        <a class="navbar-brand ms-3" href="#"> 
+            <span id="fecha-actual"></span>
+        </a>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            
+            <ul class="navbar-nav ms-auto social-icons">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-facebook"></i></a>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-instagram"></i></a>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-twitter"></i></a>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-youtube"></i></a>
+                
+            </ul>
+
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Admisión</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Admisiones 2024</a>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Elecciones</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Elecciones 2023</a>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Quienes Somos</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Autoridades</a>
+                        <a class="dropdown-item" href="#">Normativa</a>
+                        <a class="dropdown-item" href="#">Reseña Historica</a>
+                        <a class="dropdown-item" href="#">Resoluciones UCE</a>
+                        <a class="dropdown-item" href="#">Directorio Telefonico</a>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Oferta Academica</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Nivelacion</a>
+                        <a class="dropdown-item" href="#">Grado</a>
+                        <a class="dropdown-item" href="#">Posgrado</a>
+                        <a class="dropdown-item" href="#">Educacion Continua</a>
+                        <a class="dropdown-item" href="#">Idiomas IAI</a>
+                        <a class="dropdown-item" href="#">Suficiencia Informatica</a>
+                        <a class="dropdown-item" href="#">Suficiencia Cultura Fisica</a>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Investigación</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Direccion Investigacion</a>
+                        <a class="dropdown-item" href="#">Direccion Doctorados</a>
+                        <a class="dropdown-item" href="#">Centro Ciencias Basicas</a>
+                        <a class="dropdown-item" href="#">Grupos de Invesigacion</a>
+                        <a class="dropdown-item" href="#">Institutos de Investigacion</a>
+                        <a class="dropdown-item" href="#">Investigadores</a>
+                        <a class="dropdown-item" href="#">Sistema Integrado Bibliotecas</a>
+                        <a class="dropdown-item" href="#">Unidad Gestion Doctorados</a>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Vinculacion</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Direccion Vinculacion</a>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Transparencia</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Transparencia</a>
+                        <a class="dropdown-item" href="#">Informes de Gestion</a>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Servicios</a>
+                    <ul class="dropdown-menu">
+                        <div class="menu-item">
+                            <img src="imagenes/mazo-de-la-corte.png" alt="Consultorios">
+                            <span>Consultorios Jurídicos</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/correo (1).png" alt="Correo">
+                            <span>Correo Institucional</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/encuesta-en-linea.png" alt="Encuestas">
+                            <span>Encuestas</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/cuidado-dental.png" alt="Odontología">
+                            <span>Especialidades Odontológicas</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/leyendo.png" alt="Estudiantes">
+                            <span>Información Estudiantes</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/hospital.png" alt="Hospital">
+                            <span>Hospital del Día</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/microscopio.png" alt="Laboratorio">
+                            <span>Laboratorio Clínico</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/museo.png" alt="Museo">
+                            <span>Museo Universitario</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/revistas.png" alt="Revista">
+                            <span>Revista Digital</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/graduado (1).png" alt="Graduados">
+                            <span>Seguimiento Graduados</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/libro-abierto.png" alt="Biblioteca">
+                            <span>Sistema Integrado de Bibliotecas</span>
+                        </div>
+                        <div class="menu-item">
+                            <img src="imagenes/pastel-de-grafico.png" alt="Cifras">
+                            <span>UCE en Cifras</span>
+                        </div>
+                    </ul>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">SIIU</a>
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Sistema Integral de Información Universitaria</a>
+                    </ul>
+                
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Offcanvas Menu -->
+<div class="offcanvas offcanvas-start bg-dark text-white" tabindex="1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="navbar-nav">
+            <input type="text" placeholder="Busqueda Avanzada" class="bg-dark" >
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">HOME</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Noticias</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Facultades</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Investigación</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Vinculación</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Direcciones Administrativas</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Clubes</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Links</a>
+            
+            <hr>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="#">Contactanos</a>
+            
+        </ul>
+    </div>
+</div>
+
+
+<div class="cuadrícula">
+    <div class="row-span-2">
+        <img src="imagenes/radio_t.png" alt="Imagen de ejemplo" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <div class="col-span-4 row-span-5">
+        <div class="carousel-container">
+            <div class="carousel">
+                <img src="imagenes/c1.PNG" alt="Imagen carrusel" class="active">
+                <img src="imagenes/c2.PNG" alt="Imagen carrusel">
+                <img src="imagenes/c3.PNG" alt="Imagen carrusel">
+            </div>
+            <button class="carousel-btn left" onclick="moveCarousel('left')">&#10094;</button>
+            <button class="carousel-btn right" onclick="moveCarousel('right')">&#10095;</button>
+        </div>
+    </div>
+    <div class="row-start-3">
+        <audio controls style="width: 100%;">
+            <source src="ruta_a_audio.mp3" type="audio/mpeg">
+            Tu navegador no soporta el elemento de audio.
+        </audio>
+    </div>
+    <div class="row-span-2 row-start-4">
+        <img src="imagenes/defensoriaLotaip.png" alt="Logo" style="width: 100%; height: auto; object-fit: contain;">
+    </div>
+    <div class="section-title row-start-6"><img src="imagenes/inf.png" alt="" srcset=""></div> <div class="col-span-4 row-start-6">
+        <div class="carousel-container">
+            <div class="carousel">
+                <img src="imagenes/c2.PNG" alt="Imagen carrusel" class="active">
+                <img src="imagenes/c3.PNG" alt="Imagen carrusel">
+                <img src="imagenes/c1.PNG" alt="Imagen carrusel">
+            </div>
+            <button class="carousel-btn left" onclick="moveCarousel('left')">&#10094;</button>
+            <button class="carousel-btn right" onclick="moveCarousel('right')">&#10095;</button>
+        </div>
+    </div>
+    <div class="row-start-7">
+        <div >
+            <img src="imagenes/a1.png" alt="" srcset="">
+        </div>
+    </div>
+    <div class="col-span-2 row-start-7">
+    <ul><iframe width="200px" height="150px" src="https://www.youtube.com/embed/9YwqS-3wYOU" title="UCE Informa 446" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></ul>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <center> <h5>UCE INFORMA 446 <br><br>
+        <button id="boton_enviar">UCE Canal Oficial de YouTube</button>
+    </h5></center>
+    </div>
+    <div class="col-span-2  row-start-7">
+        
+       <ul><button id="boton1">Protocolo de Prevencion y Atencion de casos de discriminacion, acoso laboral y violencia contra la mujer</button> <br> <br><button id="boton1">Calendario Academico 2024-2025 y 2025-2025</button> <br><br> <button id="boton1">Estatuto Universitario</button></ul> 
+       <ul><button id="boton2">Plan de Capacitacion 2024</button> <br><br> <button id="boton2">Disculpas Publicas Dr.Diego Sigcho</button><br><br><button id="boton2">Boletines de prensa</button> <br><br><button id="boton2">Informacion estudiantes</button> </ul> 
+    </div>
+    
+    <div class="row-start-8">
+        <div class="social-icons">
+            <p>Siguenos en:</p>
+            <i class="fab fa-facebook"> </i><center> <img src="imagenes/circulo.png" alt="" width="50 px" height="50px"></center>
+            <i class="fab fa-instagram"></i> <center> <img src="imagenes/instagram.png" alt="" width="50 px" height="50px"></center>
+            <i class="fab fa-twitter"></i> <center> <img src="imagenes/logotipo-de-twitter.png" alt="" width="50 px" height="50px"></center>
+            <i class="fab fa-youtube"></i> <center> <img src="imagenes/youtube.png" alt="" width="50 px" height="50px"></center>
+            <br><p>Contactanos:</p>
+            <i class="fas fa-map-marker-alt"></i> <center> <img src="imagenes/pin-de-ubicacion.png" alt="" width="50 px" height="50px"></center>
+        </div>
+    </div>
+    <div class="col-span-4 row-start-8 university-info bg-dark text-white">
+        <div class="container">
+            <div class="column">
+                <h2>ADMINISTRATIVOS</h2>
+                <ul class="un">
+                    Archivo General <br> 
+                    Comité de Ética <br>
+                    Dirección General Académica <br>
+                    Dirección General Administrativa <br>
+                    Dirección General Financiera <br>
+                    Dirección de Aseguramiento de la Calidad <br>
+                    Dirección de Bienestar Universitario <br>
+                    Dirección de Comunicación y Cultura <br>
+                    Dirección de Contratación Pública <br>
+                    Dirección de Desarrollo Académico <br>
+                    Dirección de Relaciones Internacionales <br>
+                    Dirección de Planificación y Desarrollo Universitario <br>
+                    Dirección de Seguridad y Salud Ocupacional <br>
+                    Dirección de Tecnologías de la Información <br>
+                    Dirección de Talento Humano <br>
+                    Secretaría General <br>
+                </ul>
+            </div>
+            <div class="column">
+                
+                <h2>INVESTIGACIÓN</h2>
+
+                <ul class="un">
+                    Dirección de Investigación <br>
+                    Dirección de Doctorados e Innovación <br>
+                    Centros de Ciencias Básicas <br>
+                    Institutos de Investigación <br>
+                    Sistema Integrado de Bibliotecas <br>
+                    Unidad de Gestión de Doctoradosbr
+                </ul>
+                
+                <h2>ÉTICA DE LA INVESTIGACIÓN</h2>
+                <ul class="un">
+                    Comité de Ética de Investigación en Seres Humanos <br>
+                </ul>
+                
+                <h2>VINCULACIÓN</h2>
+                <ul class="un">
+                    Dirección de Vinculación con la Sociedad <br>
+                </ul>
+                
+                <h2>NIVELACIÓN</h2>
+                <ul class="un">
+                    Nivelación <br>
+                </ul>
+            </div>
+            <div class="column">
+                <h2>FACULTADES</h2>
+                <ul class="un">
+                    Artes <br>
+                    Arquitectura y Urbanismo <br>
+                    Ciencias <br>
+                    Ciencias Administrativas <br>
+                    Ciencias Agrícolas <br>
+                    Ciencias Biológicas <br>
+                    Ciencias de la Discapacidad, atención prehospitalaria <br>
+                    Ciencias Económicas <br>
+                    Ciencias Médicas <br>
+                    Ciencias Psicológicas <br>
+                    Ciencias Químicas <br>
+                    Ciencias Sociales y Humanas <br>
+                    Comunicación Social <br>
+                    Cultura Física <br>
+                    Ingeniería y Ciencias Aplicadas <br>
+                    Filosofía, Letras y Ciencias de la Educación <br>
+                </ul>
+            </div>
+            <div class="column">
+                <h2>FACULTADES</h2>
+                <ul class="un">
+                    Ingeniería en Geología, Minas, Petróleo y Ambiental <br>
+                    Ingeniería Química <br>
+                    Jurisprudencia, Ciencias Políticas y Sociales <br>
+                    Medicina Veterinaria y Zootecnia <br>
+                    Odontología <br>
+                </ul>
+                
+                <h2>SEDES</h2>
+                <ul class="un">
+                    Sede Galápagos <br>
+                    Sede Santo Domingo <br>
+                </ul>
+                
+                <h2>POSGRADO</h2>
+                <ul class="un">
+                    Coordinación General de Posgrados <br>
+                </ul>
+            </div>
+        </div>
+          </div>
+</div>
+<div >
+    <footer>
+        <center><p>Copyright &copy; 2024  Universidad Central del Ecuador. Todos los derechos reservados. <br>
+            Quito-Ecuador</p></center>
+      </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Script para mostrar la fecha actual en el menú
+    document.addEventListener("DOMContentLoaded", function() {
+        const fechaActual = new Date();
+        const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'numeric', day: 'numeric' };
+        document.getElementById("fecha-actual").innerText = fechaActual.toLocaleDateString('es-ES', opcionesFecha);
+    });
+</script>
+
+</body>
+</html>

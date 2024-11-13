@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url(imagenes/fondo.jpg);
+    flex-direction: column;
+}
+.loader {
+    text-align: center;
+}
+.loader img {
+    width: 300px; /* Ajusta el tamaño del logo aquí */
+}
+.loading-text {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #f6f9fc;
+}
+.loading-text1 {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #5899da;
+}
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+.progress-bar {
+    height: 20px;
+    width: 0; /* Inicialmente en 0% */
+    background-color: #004d99;
+    border-radius: 25px;
+    transition: width 3s ease; /* Cambia el tiempo según sea necesario */
+}
+
